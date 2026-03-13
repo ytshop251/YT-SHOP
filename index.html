@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YT SHOP — Premium Reseller</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0a0a0a">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="YT SHOP">
+  <link rel="apple-touch-icon" href="icons/icon-192.svg">
+  <meta name="description" content="Premium products at unbeatable prices. Order via WhatsApp or Telegram.">
+  <meta property="og:title" content="YT SHOP — Premium Reseller">
+  <meta property="og:description" content="Premium products. Real deals. No fuss.">
+  <meta property="og:type" content="website">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --black:#0a0a0a; --white:#f5f5f0; --grey-light:#888; --grey-faint:#222; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--black); color:var(--white); font-family:'DM Sans',sans-serif; font-weight:300; cursor:crosshair; overflow-x:hidden; }
+  body::before { content:''; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events:none; z-index:9999; opacity:0.4; }
+  ::-webkit-scrollbar{width:4px} ::-webkit-scrollbar-track{background:var(--black)} ::-webkit-scrollbar-thumb{background:#444}
+
+  nav { position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 3rem;border-bottom:1px solid #1e1e1e;background:rgba(10,10,10,0.92);backdrop-filter:blur(12px); }
+  .nav-logo { font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:0.15em;color:var(--white);text-decoration:none; }
+  .nav-logo span { color:var(--grey-light);font-size:0.9rem;font-family:'DM Mono',monospace;letter-spacing:0.3em;display:block;margin-top:-0.4rem; }
+  .nav-links { display:flex;gap:2.5rem;list-style:none; }
+  .nav-links a { font-family:'DM Mono',monospace;font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--grey-light);text-decoration:none;transition:color 0.2s; }
+  .nav-links a:hover { color:var(--white); }
+  .nav-cart { font-family:'DM Mono',monospace;font-size:0.75rem;letter-spacing:0.15em;color:var(--black);background:var(--white);padding:0.5rem 1.4rem;border:none;cursor:pointer;font-weight:500;transition:background 0.2s,transform 0.1s; }
+  .nav-cart:hover { background:#ddd;transform:translateY(-1px); }
+
+  .hero { min-height:auto;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;padding:1.2rem 3rem;position:relative;border-bottom:1px solid #1e1e1e;overflow:hidden; }
+  .hero-bg-text { position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Bebas Neue',sans-serif;font-size:clamp(8rem,22vw,22rem);color:transparent;-webkit-text-stroke:1px #1e1e1e;white-space:nowrap;pointer-events:none;user-select:none;letter-spacing:0.05em;animation:drift 12s ease-in-out infinite alternate; z-index:0; }
+  @keyframes drift { from{transform:translate(-50%,-50%) translateX(-20px)} to{transform:translate(-50%,-50%) translateX(20px)} }
+  .hero-badge { font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.4em;text-transform:uppercase;color:var(--grey-light);border:1px solid #333;display:inline-block;padding:0.4rem 1rem;margin-bottom:1.5rem;width:fit-content; }
+  .hero h1 { font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem,9vw,9rem);line-height:0.9;letter-spacing:0.02em;max-width:900px;position:relative;z-index:1; }
+  .hero h1 em { font-style:normal;color:var(--grey-light); }
+  .hero-sub { margin-top:2rem;font-size:0.95rem;color:var(--grey-light);max-width:420px;line-height:1.7;font-weight:300; }
+  .hero-cta { display:inline-flex;align-items:center;gap:1rem;margin-top:2.5rem;font-family:'DM Mono',monospace;font-size:0.8rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--black);background:var(--white);padding:1rem 2.5rem;border:1px solid var(--white);cursor:pointer;transition:all 0.2s; }
+  .hero-cta:hover { background:transparent;color:var(--white); }
+  /* hero-scroll removed */
+
+  /* Centered, large black & white search bar */
+  .hero-search { width:min(1000px,92%); max-width:1000px; display:flex; align-items:center; gap:0.5rem; background:var(--white); border-radius:12px; padding:8px; box-shadow:0 10px 30px rgba(0,0,0,0.45); position:relative; z-index:2; }
+  .hero-search input[type="search"] { flex:1; border:0; outline:0; background:transparent; color:var(--black); font-family:'DM Mono',monospace; font-size:1.15rem; padding:18px 14px; border-radius:10px; }
+  .hero-search input::placeholder { color:#666; font-weight:300; }
+  .hero-search .search-btn { background:var(--black); color:var(--white); border-radius:8px; padding:10px 14px; font-size:1.1rem; border:0; cursor:pointer; display:inline-flex; align-items:center; justify-content:center }
+  .hero-search #searchClear { background:transparent; border:0; color:#444; font-size:1.05rem; padding:8px 10px; cursor:pointer }
+  .hero-search input:focus { box-shadow:0 6px 18px rgba(0,0,0,0.25) inset; }
+
+  @media(max-width:768px){
+    .hero-search { width:94%; }
+    .hero-search input[type="search"] { font-size:1rem; padding:14px 10px; }
+  }
+
+  /* top-filter-tabs removed - tabs may be omitted */
+
+  /* Marquee removed */
+
+  .section-label { font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.4em;text-transform:uppercase;color:#555;margin-bottom:1rem;display:flex;align-items:center;gap:1rem; }
+  .section-label::before { content:'';width:30px;height:1px;background:#555; }
+
+  #products { padding:2rem 3rem; }
+  .products-header { display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:4rem;border-bottom:1px solid #1e1e1e;padding-bottom:2rem; }
+  .products-title { font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,5vw,5rem);letter-spacing:0.05em;line-height:1; }
+  .filter-tabs { display:flex;gap:0.5rem;flex-wrap:wrap; }
+  .filter-tab { font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.5rem 1.2rem;border:1px solid #333;background:none;color:#666;cursor:pointer;transition:all 0.2s; }
+  .filter-tab.active,.filter-tab:hover { background:var(--white);color:var(--black);border-color:var(--white); }
+  .products-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1px;background:#1a1a1a; }
+  .product-card { background:var(--black);position:relative;overflow:hidden;cursor:pointer;transition:background 0.3s; }
+  .product-card:hover { background:var(--grey-faint); }
+  .product-img-placeholder { width:100%;aspect-ratio:1/1;background:var(--grey-faint);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;transition:transform 0.5s ease; }
+  .product-card:hover .product-img-placeholder { transform:scale(1.04); }
+  .product-img-placeholder-text { font-size:3.5rem;position:relative;z-index:1; }
+  .product-badge { position:absolute;top:1rem;left:1rem;font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;background:var(--white);color:var(--black);padding:0.3rem 0.8rem;z-index:2; }
+  .product-info { padding:1.5rem;border-top:1px solid #1e1e1e; }
+  .product-cat { font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:#555;margin-bottom:0.5rem; }
+  .product-name { font-size:1rem;font-weight:400;margin-bottom:0.8rem;line-height:1.3; }
+  .product-desc { font-size:0.8rem;color:#666;margin-bottom:0.6rem;line-height:1.5; }
+  .product-footer { display:flex;align-items:center;justify-content:space-between; }
+  .product-price { font-family:'DM Mono',monospace;font-size:1rem;font-weight:500;letter-spacing:0.05em; }
+  .product-btn { font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;background:none;border:1px solid #333;color:#888;padding:0.5rem 1rem;cursor:pointer;transition:all 0.2s; }
+  .product-btn:hover { background:var(--white);color:var(--black);border-color:var(--white); }
+  .no-products { grid-column:1/-1;padding:5rem 2rem;text-align:center;font-family:'DM Mono',monospace;font-size:0.75rem;letter-spacing:0.2em;color:#444;text-transform:uppercase; }
+
+  .about-strip { padding:6rem 3rem;display:grid;grid-template-columns:1fr 1fr;gap:6rem;border-top:1px solid #1e1e1e;border-bottom:1px solid #1e1e1e;background:var(--grey-faint); }
+  .about-strip h2 { font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,4vw,4.5rem);line-height:1;letter-spacing:0.05em; }
+  .about-strip p { color:var(--grey-light);line-height:1.8;font-size:0.95rem;max-width:460px;align-self:center; }
+  .stats-row { display:flex;gap:3rem;margin-top:2.5rem;padding-top:2.5rem;border-top:1px solid #1e1e1e; }
+  .stat-num { font-family:'Bebas Neue',sans-serif;font-size:2.5rem;letter-spacing:0.05em;line-height:1; }
+  .stat-label { font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;color:#555;text-transform:uppercase;margin-top:0.3rem; }
+
+  .modal-overlay { position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);z-index:99999;display:flex;align-items:center;justify-content:center;padding:0;opacity:0;pointer-events:none;transition:opacity 0.3s; }
+  .modal-overlay.open { opacity:1;pointer-events:all; }
+  .modal { background:var(--black);border:none;max-width:none;width:100%;height:100%;transform:none;position:relative;z-index:100000; }
+  .modal-header { padding:3rem 3rem 2rem;border-bottom:1px solid #1e1e1e;display:flex;align-items:flex-start;justify-content:space-between; }
+  .modal-tag { font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;color:#555;margin-bottom:0.5rem; }
+  .modal-title { font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:0.05em;line-height:1; }
+  .modal-close { background:none;border:1px solid #2a2a2a;color:#666;width:2rem;height:2rem;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.2s; position:absolute; top:8px; right:8px; z-index:100001; }
+  .modal-close:hover { border-color:var(--white);color:var(--white); }
+  .modal-body { padding:1rem 2rem; height:100%; display:flex; flex-direction:column; overflow:hidden; }
+  .modal-product-info { display:flex;gap:1.5rem;margin-bottom:2rem;padding-bottom:2rem;border-bottom:1px solid #1e1e1e;align-items:center; }
+  .modal-product-thumb { width:100%;height:auto;background:var(--grey-faint);border:1px solid #2a2a2a;display:flex;align-items:center;justify-content:center;font-size:2rem;flex-shrink:0;padding:0.5rem; }
+  .modal-product-name { font-size:1.05rem;margin-bottom:0.3rem; }
+  .modal-product-price { font-family:'DM Mono',monospace;font-size:1.1rem;font-weight:500; }
+  .modal-cta-label { font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;color:#555;margin-bottom:1rem;text-align:center; }
+  .modal-cta-buttons { display:grid;grid-template-columns:1fr 1fr;gap:1rem; }
+  .cta-btn { display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.5rem;padding:1.5rem 1rem;border:1px solid #2a2a2a;background:var(--grey-faint);text-decoration:none;color:var(--white);transition:all 0.25s;cursor:pointer; }
+  .cta-btn:hover { border-color:var(--white);background:#111;transform:translateY(-2px); }
+  .cta-btn-icon { font-size:1.8rem;margin-bottom:0.2rem; }
+  .cta-btn-name { font-family:'DM Mono',monospace;font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;font-weight:500; }
+  .cta-btn-sub { font-size:0.72rem;color:#666; }
+  /* small variant for modal compact contacts */
+  .cta-btn.small { flex-direction:row; gap:0.6rem; padding:6px 8px; border-radius:8px; }
+  .cta-btn.small .cta-btn-icon { width:18px;height:18px; margin-bottom:0; }
+  .cta-btn.small .cta-btn-name { font-size:0.72rem; }
+  .modal-cta-buttons { display:flex; gap:0.5rem; justify-content:center; }
+  @media(max-width:480px){ .cta-btn.small { padding:6px 10px } }
+  .modal-note { margin-top:0.5rem;text-align:center;font-size:0.8rem;color:#444;font-family:'DM Mono',monospace;letter-spacing:0.1em; }
+
+  /* Modal image larger layout */
+  .modal.large-image {
+    height: 100%;
+  }
+  /* when showing a big image, split the body into two columns so the thumbnail
+     and the order details sit side-by-side and are visible together */
+  .modal.large-image .modal-body {
+    height:100%;display:grid;grid-template-columns:1fr 0.8fr;grid-template-rows:auto 1fr auto;
+    grid-template-areas:"img top" "img desc" "img note";gap:2rem;overflow:hidden;padding:2rem;
+  }
+  .modal.large-image .modal-product-thumb {
+    grid-area:img;width:100%;height:100%;
+  }
+  .modal.large-image .modal-top {
+    grid-area:top;display:flex;flex-direction:column;gap:0.5rem;
+  }
+  .modal.large-image .modal-top .modal-cta-buttons {
+    margin-top:0.5rem;
+  }
+  .modal.large-image .modal-product-thumb img {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius:8px;
+  }
+  .modal.large-image #modalDesc { grid-area:desc; overflow-y:auto; padding-right:0.5rem; }
+  .modal.large-image .modal-note { grid-area:note; }
+
+  .modal-body .modal-product-name { font-size:1.6rem; margin:0; line-height:1.1; }
+  .modal-body .modal-product-price { font-size:1.1rem; margin:0; }
+  .modal-cta-buttons { display:flex; gap:0.5rem; align-items:center }
+  /* revert to vertical layout on smaller screens */
+  @media (max-width:768px) {
+    .modal-body { padding:1.25rem; }
+    .modal.large-image .modal-body { display:flex; flex-direction:column; gap:0.5rem; padding:1.25rem; }
+    .modal.large-image .modal-product-thumb { flex:0 0 38vh; min-height:0; width:auto; margin:0 1.5rem; }
+    .modal.large-image .modal-top { flex:0 0 auto; margin-top:0.5rem; }
+    .modal-body .modal-product-name { font-size:1rem; }
+    .modal-body .modal-product-price { font-size:0.9rem; }
+  }
+
+  footer { padding:4rem 3rem 2rem;border-top:1px solid #1e1e1e;display:grid;grid-template-columns:1fr 1fr 1fr;gap:3rem; }
+  .footer-brand .nav-logo { font-size:2.5rem; }
+  .footer-brand p { font-size:0.85rem;color:#555;margin-top:1rem;line-height:1.7;max-width:260px; }
+  .footer-col h4 { font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;color:#444;margin-bottom:1.2rem; }
+  .footer-col ul { list-style:none; }
+  .footer-col ul li { margin-bottom:0.7rem; }
+  .footer-col ul li a { font-size:0.9rem;color:#666;text-decoration:none;transition:color 0.2s; }
+  .footer-col ul li a:hover { color:var(--white); }
+  .footer-contact-item { display:flex;align-items:center;gap:0.7rem;margin-bottom:0.8rem;font-size:0.85rem;color:#666; }
+  .footer-bottom { padding:1.5rem 3rem;border-top:1px solid #111;display:flex;justify-content:space-between;align-items:center; }
+  .footer-bottom p { font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;color:#333; }
+
+  @media(max-width:768px){
+    nav{padding:1rem 1.5rem} .nav-links{display:none} .hero{padding:0 1.5rem 4rem} .hero-scroll{display:none}
+    #products{padding:4rem 1.5rem} .products-header{flex-direction:column;align-items:flex-start;gap:1.5rem}
+    .about-strip{grid-template-columns:1fr;gap:2rem;padding:4rem 1.5rem}
+    footer{grid-template-columns:1fr;padding:3rem 1.5rem 1.5rem} .footer-bottom{flex-direction:column;gap:0.5rem;padding:1.5rem}
+    .modal-cta-buttons{grid-template-columns:1fr}
+  }
+
+  /* PWA install banner */
+  #installBanner { position:fixed;left:1rem;right:1rem;bottom:1.5rem;background:#111;border:1px solid #222;padding:0.8rem 1rem;border-radius:12px;display:flex;align-items:center;gap:0.9rem;z-index:99999;box-shadow:0 8px 24px rgba(0,0,0,0.6);transform:translateY(120%);opacity:0;transition:all 0.32s; }
+  #installBanner.show { transform:translateY(0); opacity:1; }
+  #installBanner img { width:44px;height:44px;border-radius:8px;flex-shrink:0 }
+  #installBanner .install-text { color:#ddd;font-family:'DM Mono',monospace;font-size:0.85rem; }
+  #installBanner button { margin-left:auto;background:var(--white);color:var(--black);border:none;padding:0.6rem 1rem;border-radius:8px;cursor:pointer;font-family:'DM Mono',monospace;font-weight:600 }
+
+  /* Replace emoji placeholders with images */
+  .product-img { width:64%;height:auto;display:block;max-width:220px;transition:width 0.18s ease, max-width 0.18s ease }
+  .product-img-placeholder-text { display:none }
+  .product-img-placeholder { display:flex;align-items:center;justify-content:center }
+  /* default thumbnail size inside modal unless large-image class is present */
+  .modal:not(.large-image) .modal-product-thumb img { width:80px;height:80px;object-fit:cover;border-radius:6px }
+  .cta-btn-icon, .footer-icon { width:22px;height:22px;display:inline-block;vertical-align:middle }
+
+  /* Responsive product image sizing for tablets/phones */
+  @media (max-width:1024px) {
+    .product-img { width:48%; max-width:160px }
+  }
+  @media (max-width:768px) {
+    .product-img { width:36%; max-width:120px }
+    /* keep smaller thumbnails on mobile when modal not enlarged */
+    .modal:not(.large-image) .modal-product-thumb img { width:64px;height:64px }
+  }
+  @media (max-width:480px) {
+    .product-img { width:32%; max-width:96px }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo" id="navLogo">YT<span id="navSub">SHOP</span></a>
+  <ul class="nav-links">
+    <li><a href="#products">Products</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-cart" onclick="showInstallBanner()">Download App →</button>
+</nav>
+
+<!-- PWA Install Banner -->
+<div id="installBanner" aria-hidden="true">
+  <img src="icons/product.svg" alt="App icon">
+  <div class="install-text">
+    <div style="font-weight:600">Install YT SHOP</div>
+    <div style="font-size:0.8rem;color:#777">Add the web app to your phone for a better experience</div>
+  </div>
+  <button id="installBtn">Install</button>
+  <button id="installClose" style="background:transparent;border:none;color:#666;margin-left:0.6rem;">✕</button>
+</div>
+
+<!-- top filter banner removed -->
+
+<section class="hero">
+  <div class="hero-bg-text">YT</div>
+  <div class="hero-badge" id="heroBadge"></div>
+  <h1 id="heroHeadline"></h1>
+  <p class="hero-sub" id="heroSub"></p>
+  <div class="products-header" style="width:100%;max-width:1000px;margin-bottom:1.2rem;display:flex;align-items:flex-end;justify-content:space-between;">
+    <div>
+      <div class="section-label">A WISE MAN WANCE SAID LOKING AT A MIRROR</div>
+      <h2 class="products-title">“YOU WANT IT? WE GOT IT!”</h2>
+    </div>
+    
+  </div>
+
+  <div class="hero-search">
+    <input id="siteSearch" type="search" placeholder="Search products by name, description, or category" aria-label="Search products">
+    <button id="searchBtn" class="search-btn" aria-label="Search">🔍</button>
+    <button id="searchClear" aria-label="Clear search">✕</button>
+  </div>
+  
+</section>
+
+<!-- marquee removed -->
+
+<section id="products">
+  <div class="products-grid" id="productsGrid"></div>
+</section>
+
+<section class="about-strip" id="about">
+  <div>
+    <div class="section-label">Who We Are</div>
+    <h2>YOUR TRUSTED<br>RESELLER<br>SINCE DAY ONE.</h2>
+    <div class="stats-row">
+      <div><div class="stat-num">500+</div><div class="stat-label">Orders Fulfilled</div></div>
+      <div><div class="stat-num">98%</div><div class="stat-label">Satisfaction</div></div>
+      <div><div class="stat-num">24H</div><div class="stat-label">Response Time</div></div>
+    </div>
+  </div>
+  <p>YT Shop is a trusted reseller platform dedicated to bringing you premium products at the best prices. We cut out the middlemen and deal directly — no overcomplicated checkout, just real conversations and real deals.<br><br>Reach us on WhatsApp or Telegram to place your order. We'll handle the rest.</p>
+</section>
+
+<footer id="contact">
+  <div class="footer-brand">
+    <a href="#" class="nav-logo">YT<span>SHOP</span></a>
+    <p id="footerDesc"></p>
+  </div>
+  <div class="footer-col">
+    <h4>Navigate</h4>
+    <ul>
+      <li><a href="#products">Products</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Contact Us</h4>
+    <div class="footer-contact-item"><img src="icons/whatsapp.svg" class="footer-icon" alt="WA"><span id="footerWa"></span></div>
+    <div class="footer-contact-item"><img src="icons/telegram.svg" class="footer-icon" alt="TG"><span id="footerTg"></span></div>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <p id="footerCopy"></p>
+  <p>ORDER VIA WHATSAPP OR TELEGRAM</p>
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-body">
+      <div class="modal-product-thumb" id="modalThumb"></div>
+      <div class="modal-top">
+        <div>
+          <div class="modal-product-name" id="modalName"></div>
+          <div class="modal-product-price" id="modalPrice"></div>
+        </div>
+        <div class="modal-cta-label" style="margin:0 0 0 1rem">TO ORDER</div>
+        <div class="modal-cta-buttons" style="margin-left:10px">
+          <a class="cta-btn small" id="whatsappBtn" href="#" target="_blank">
+            <img src="icons/whatsapp.svg" class="cta-btn-icon" alt="WhatsApp">
+            <span class="cta-btn-name">WhatsApp</span>
+          </a>
+          <a class="cta-btn small" id="telegramBtn" href="#" target="_blank">
+            <img src="icons/telegram.svg" class="cta-btn-icon" alt="Telegram">
+            <span class="cta-btn-name">Telegram</span>
+          </a>
+        </div>
+      </div>
+      <div id="modalDesc" style="color:#777;line-height:1.6;margin-top:0.6rem;font-size:0.9rem;"></div>
+      <div class="modal-note">We'll confirm your order & arrange payment within 24hrs</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── DEFAULTS (fallback if admin hasn't saved anything yet) ──────────────────
+const DEFAULTS = {
+  products: [
+    {id:1,name:'Wireless ANC Earbuds Pro',    price:'$49.99', cat:'tech',      badge:'Hot Deal',   status:'active',image:'icons/product.svg',desc:'Compact true wireless earbuds with ANC and long battery life.'},
+    {id:2,name:'Monochrome Sneakers Limited', price:'$89.00', cat:'fashion',   badge:'',           status:'active',image:'icons/product.svg',desc:'Limited edition monochrome sneakers — sleek and durable.'},
+    {id:3,name:'Smart Watch Series X',        price:'$119.00',cat:'lifestyle', badge:'New In',     status:'active',image:'icons/product.svg',desc:'Feature-packed smart watch with fitness tracking and long standby.'},
+    {id:4,name:'Slim Mechanical Keyboard',    price:'$67.50', cat:'tech',      badge:'',           status:'active',image:'icons/product.svg',desc:'Low-profile mechanical keyboard with hot-swap switches.'},
+    {id:5,name:'Matte Black Sunglasses',      price:'$34.00', cat:'fashion',   badge:'Sale',       status:'active',image:'icons/product.svg',desc:'Matte finish sunglasses with UV protection.'},
+    {id:6,name:'Minimalist Carry Backpack',   price:'$75.00', cat:'lifestyle', badge:'',           status:'active',image:'icons/product.svg',desc:'Water-resistant daypack with organized compartments.'},
+    {id:7,name:'GaN 100W Charger',            price:'$28.00', cat:'tech',      badge:'Best Seller',status:'active',image:'icons/product.svg',desc:'Compact 100W GaN fast charger for laptops and phones.'},
+    {id:8,name:'Premium Grooming Kit',        price:'$44.99', cat:'lifestyle', badge:'',           status:'active',image:'icons/product.svg',desc:'Full grooming kit with premium blades and case.'},
+  ],
+  categories: [{name:'Tech',key:'tech'},{name:'Fashion',key:'fashion'},{name:'Lifestyle',key:'lifestyle'}],
+  hero:    {line1:'CURATED',line2:'FINDS.',line3:'DIRECT',line4:'DEALS.',sub:'Premium reseller offering the best products at unbeatable prices. Every item hand-picked, every deal worth it.',badge:'Exclusive Reseller ✦ Est. 2024',cta:'Browse Collection'},
+  contact: {waNumber:'1234567890',waDisplay:'+1 234 567 8900',tgUser:'YTShop',tgDisplay:'@YTShop'},
+  marquee: ['Premium Products','Fast Delivery','Trusted Reseller','Best Prices','Order via WhatsApp','Order via Telegram','YT Shop'],
+  site:    {name:'YT SHOP',tagline:'Premium Reseller',footerDesc:"Premium products. Real deals. No fuss. Just message us and we'll sort it."},
+};
+
+// ── DATA READER — same keys the admin writes to ─────────────────────────────
+function getData(key) {
+  try { const d = localStorage.getItem('yt_'+key); return d ? JSON.parse(d) : DEFAULTS[key]; }
+  catch { return DEFAULTS[key]; }
+}
+
+// ── RENDER EVERYTHING ───────────────────────────────────────────────────────
+function renderAll() {
+  const site    = getData('site');
+  const hero    = getData('hero');
+  const contact = getData('contact');
+  const marquee = getData('marquee');
+  const cats    = getData('categories');
+
+  // Page title
+  document.title = site.name + ' — ' + site.tagline;
+
+  // Hero — clear badge/headline/subtext when empty
+  const badgeEl = document.getElementById('heroBadge');
+  const headlineEl = document.getElementById('heroHeadline');
+  const subEl = document.getElementById('heroSub');
+  if (badgeEl) badgeEl.textContent = hero.badge || '';
+  const hasHeadline = (hero.line1 && hero.line1.trim()) || (hero.line3 && hero.line3.trim());
+  if (hasHeadline) {
+    headlineEl.innerHTML = `${hero.line1 || ''}${(hero.line1 && hero.line3) ? '<br>' : ''}${hero.line3 || ''}`;
+  } else {
+    headlineEl.textContent = '';
+  }
+  subEl.textContent = hero.sub || '';
+
+  // Marquee removed — skip if element absent
+  const marqueeEl = document.getElementById('marqueeTrack');
+  if (marqueeEl) {
+    const doubled = [...marquee, ...marquee];
+    marqueeEl.innerHTML = doubled.map(t => `<span class="marquee-item">${t}</span>`).join('');
+  }
+
+  // Filter tabs (optional)
+  const filterTabsEl = document.getElementById('filterTabs');
+  if (filterTabsEl) {
+    filterTabsEl.innerHTML =
+      `<button class="filter-tab active" onclick="renderProducts('all',this)">All</button>` +
+      cats.map(c => `<button class="filter-tab" onclick="renderProducts('${c.key}',this)">${c.name}</button>`).join('');
+  }
+
+  // Products (show all active by default)
+  renderProducts('all');
+
+  // wire search input (if present)
+  const searchEl = document.getElementById('siteSearch');
+  const clearEl = document.getElementById('searchClear');
+  if (searchEl) {
+    let debounce = null;
+    searchEl.addEventListener('input', (e) => {
+      clearTimeout(debounce);
+      debounce = setTimeout(() => { searchAndRender(e.target.value.trim()); }, 200);
+    });
+    clearEl.addEventListener('click', () => { searchEl.value = ''; renderProducts('all'); searchEl.focus(); });
+    const searchBtnEl = document.getElementById('searchBtn');
+    if (searchBtnEl) searchBtnEl.addEventListener('click', () => { searchAndRender(searchEl.value.trim()); searchEl.focus(); });
+    searchEl.addEventListener('keydown', (ev) => { if (ev.key === 'Enter') { ev.preventDefault(); searchAndRender(searchEl.value.trim()); } });
+  }
+
+  // Footer
+  document.getElementById('footerDesc').textContent = site.footerDesc;
+  document.getElementById('footerWa').textContent   = 'WhatsApp: ' + contact.waDisplay;
+  document.getElementById('footerTg').textContent   = 'Telegram: '  + contact.tgDisplay;
+  document.getElementById('footerCopy').textContent = '© 2024 ' + site.name + ' — ALL RIGHTS RESERVED';
+}
+
+// Store current product list globally so order buttons can look them up by index
+let currentProducts = [];
+
+function renderProducts(filterCat, btn) {
+  if (btn) {
+    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  const products = getData('products').filter(p => p.status === 'active');
+  currentProducts = filterCat === 'all' ? products : products.filter(p => p.cat === filterCat);
+  const grid = document.getElementById('productsGrid');
+
+  if (!currentProducts.length) {
+    grid.innerHTML = '<div class="no-products">No products in this category yet.</div>';
+    return;
+  }
+  grid.innerHTML = currentProducts.map((p, i) => {
+    const badge = p.badge ? '<div class="product-badge">' + p.badge + '</div>' : '';
+    const desc  = p.desc  ? '<div class="product-desc">'  + p.desc  + '</div>' : '';
+    return '<div class="product-card">'
+      + '<div class="product-img-placeholder" data-idx="' + i + '"><img src="' + (p.image||'icons/product.svg') + '" class="product-img" alt="' + p.name.replace(/'/g,'\\\'') + '"></div>'
+      + badge
+      + '<div class="product-info">'
+      + '<div class="product-cat">' + p.cat + '</div>'
+      + '<div class="product-name">' + p.name + '</div>'
+      + desc
+      + '<div class="product-footer">'
+      + '<div class="product-price">' + p.price + '</div>'
+      + '</div></div></div>';
+  }).join('');
+}
+
+function scoreProduct(p, terms) {
+  if (!terms || !terms.length) return 0;
+  const hay = ((p.name||'') + ' ' + (p.desc||'') + ' ' + (p.cat||'')).toLowerCase();
+  let score = 0;
+  terms.forEach(t => {
+    if (!t) return;
+    if (p.name && p.name.toLowerCase().includes(t)) score += 3;
+    if (p.desc && p.desc.toLowerCase().includes(t)) score += 1;
+    if (p.cat && p.cat.toLowerCase().includes(t)) score += 1;
+    // bonus for exact word occurrences
+    const re = new RegExp('\\b' + t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + '\\b','gi');
+    const m = (hay.match(re) || []).length;
+    score += m;
+  });
+  return score;
+}
+
+function searchAndRender(query) {
+  const q = (query||'').toLowerCase().trim();
+  const terms = q.split(/\s+/).filter(Boolean);
+  const products = getData('products').filter(p => p.status === 'active');
+  if (!q) { renderProducts('all'); return; }
+  const scored = products.map(p => ({p, score: scoreProduct(p, terms)})).filter(x => x.score>0).sort((a,b)=>b.score-a.score);
+  const items = scored.map(x => x.p);
+  currentProducts = items;
+  const grid = document.getElementById('productsGrid');
+  if (!items.length) { grid.innerHTML = '<div class="no-products">No products match your search.</div>'; return; }
+  grid.innerHTML = items.map((p,i) => {
+    const badge = p.badge ? '<div class="product-badge">' + p.badge + '</div>' : '';
+    const desc  = p.desc  ? '<div class="product-desc">'  + p.desc  + '</div>' : '';
+    return '<div class="product-card">'
+      + '<div class="product-img-placeholder" data-idx="' + i + '"><img src="' + (p.image||'icons/product.svg') + '" class="product-img" alt="' + p.name.replace(/'/g,'\\\'') + '"></div>'
+      + badge
+      + '<div class="product-info">'
+      + '<div class="product-cat">' + p.cat + '</div>'
+      + '<div class="product-name">' + p.name + '</div>'
+      + desc
+      + '<div class="product-footer">'
+      + '<div class="product-price">' + p.price + '</div>'
+      + '</div></div></div>';
+  }).join('');
+}
+
+// ── ORDER MODAL ─────────────────────────────────────────────────────────────
+// Event delegation — click any Order button, look up product by index
+document.getElementById('productsGrid').addEventListener('click', function(e) {
+  const btn = e.target.closest('[data-idx]');
+  if (!btn) return;
+  const p = currentProducts[parseInt(btn.getAttribute('data-idx'))];
+  if (p) openModal(p.name, p.price, p.image, p.desc);
+});
+
+function openModal(name, price, image, desc) {
+  const c = getData('contact');
+  document.getElementById('modalThumb').innerHTML = '<img src="' + (image||'icons/product.svg') + '" alt="' + name.replace(/'/g,'\\\'') + '">';
+  // mark modal for larger image layout
+  document.querySelector('.modal').classList.add('large-image');
+  document.getElementById('modalName').textContent  = name;
+  document.getElementById('modalPrice').textContent = price;
+  const descEl = document.getElementById('modalDesc');
+  if (descEl) descEl.textContent = desc || '';
+  const msg = encodeURIComponent('Hi YT Shop! I\'d like to order:\n\n' + name + '\n' + price + '\n\nPlease let me know how to proceed!');
+  document.getElementById('whatsappBtn').href = 'https://wa.me/' + c.waNumber + '?text=' + msg;
+  document.getElementById('telegramBtn').href = 'https://t.me/' + c.tgUser + '?text=' + msg;
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.querySelector('.modal-body').scrollTop = 0;
+}
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('modalOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+function scrollToProducts() { document.getElementById('products').scrollIntoView({behavior:'smooth'}); }
+function showInstallBanner() {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
+    return;
+  }
+  const banner = document.getElementById('installBanner');
+  if (banner) {
+    banner.classList.add('show');
+    banner.setAttribute('aria-hidden', 'false');
+  }
+}
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
+
+// ── LIVE SYNC: if admin saves in another tab, shop updates instantly ─────────
+window.addEventListener('storage', e => { if(e.key && e.key.startsWith('yt_')) renderAll(); });
+
+// ── BOOT ─────────────────────────────────────────────────────────────────────
+renderAll();
+
+// Show install banner on mobile devices immediately
+function isMobile() {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+}
+
+let deferredPrompt = null;
+const installBannerEl = document.getElementById('installBanner');
+const installBtn = document.getElementById('installBtn');
+const installClose = document.getElementById('installClose');
+
+if (isMobile() && installBannerEl) {
+  installBannerEl.classList.add('show');
+  installBannerEl.setAttribute('aria-hidden', 'false');
+}
+
+// PWA: service worker registration and install prompt handling
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').then(() => console.log('ServiceWorker registered')).catch(() => {});
+}
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  if (installBannerEl) { installBannerEl.classList.add('show'); installBannerEl.setAttribute('aria-hidden','false'); }
+});
+
+if (installBtn) installBtn.addEventListener('click', async () => {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    deferredPrompt = null;
+  } else {
+    // Fallback for browsers that don't support the prompt (like iOS Safari)
+    alert('To install, tap the Share button and select "Add to Home Screen".');
+  }
+  if (installBannerEl) installBannerEl.classList.remove('show');
+});
+if (installClose) installClose.addEventListener('click', () => { if (installBannerEl) installBannerEl.classList.remove('show'); deferredPrompt = null; });
+
+window.addEventListener('appinstalled', () => { if (installBannerEl) installBannerEl.classList.remove('show'); deferredPrompt = null; });
+
+if (window.matchMedia('(display-mode: standalone)').matches) {
+  const navCart = document.querySelector('.nav-cart');
+  if (navCart) navCart.style.display = 'none';
+}
+</script>
+</body>
+</html>
